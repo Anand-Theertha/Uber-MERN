@@ -1,8 +1,7 @@
 # Backend API Documentation
 
-### Endpoint
-
-`POST /users/register`
+<details>
+<summary><strong>POST /users/register</strong></summary>
 
 #### Description
 
@@ -91,4 +90,89 @@ curl -X POST http://localhost:3000/users/register \
   }'
 ```
 
----
+</details>
+
+<details>
+<summary><strong>POST /users/login</strong></summary>
+
+#### Description
+
+Authenticates a user and returns a JWT token if the credentials are valid.
+
+#### Request Body
+
+Send a JSON object with the following structure:
+
+```
+{
+  "email": "<user@example.com>",
+  "password": "<password>"
+}
+```
+
+### Field Requirements
+
+- `email` (string, required): Must be a valid email address.
+- `password` (string, required): Minimum 6 characters.
+
+### Responses
+
+#### Success
+
+- **200 OK**
+  - User authenticated successfully.
+  - Example response:
+    ```json
+    {
+      "token": "<jwt_token>",
+      "user": {
+        /* user data */
+      }
+    }
+    ```
+
+#### Error Responses
+
+- **400 Bad Request**
+  - Validation failed (e.g., missing fields, invalid email, short password).
+  - Example response:
+    ```json
+    {
+      "errors": [
+        { "msg": "Invalid Email", "param": "email" },
+        {
+          "msg": "Password must be at least 6 characters long",
+          "param": "password"
+        }
+      ]
+    }
+    ```
+- **401 Unauthorized**
+  - Invalid email or password.
+  - Example response:
+    ```json
+    {
+      "message": "Invalid email or password"
+    }
+    ```
+- **500 Internal Server Error**
+  - Server error during login.
+  - Example response:
+    ```json
+    {
+      "message": "Internal server error"
+    }
+    ```
+
+### Example Request
+
+```
+curl -X POST http://localhost:3000/users/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john.doe@example.com",
+    "password": "secret123"
+  }'
+```
+
+</details>
