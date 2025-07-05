@@ -176,3 +176,97 @@ curl -X POST http://localhost:3000/users/login \
 ```
 
 </details>
+
+<details>
+<summary><strong>GET /users/profile</strong></summary>
+
+#### Description
+
+Returns the authenticated user's profile information. Requires a valid JWT token in the cookie or Authorization header.
+
+#### Authentication
+
+- Requires authentication via JWT token (sent as a cookie or in the `Authorization: Bearer <token>` header).
+
+#### Request
+
+- No request body required.
+- Must include authentication token.
+
+#### Responses
+
+- **200 OK**
+  - Returns the authenticated user's profile.
+  - Example response:
+    ```json
+    {
+      "_id": "<user_id>",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com"
+      // ...other user fields
+    }
+    ```
+- **401 Unauthorized**
+  - If the token is missing, invalid, or expired.
+  - Example response:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### Example Request
+
+```
+curl -X GET http://localhost:3000/users/profile \
+  -H "Authorization: Bearer <jwt_token>"
+```
+
+</details>
+
+<details>
+<summary><strong>GET /users/logout</strong></summary>
+
+#### Description
+
+Logs out the authenticated user by clearing the authentication token and blacklisting the token to prevent further use.
+
+#### Authentication
+
+- Requires authentication via JWT token (sent as a cookie or in the `Authorization: Bearer <token>` header).
+
+#### Request
+
+- No request body required.
+- Must include authentication token.
+
+#### Responses
+
+- **200 OK**
+  - User logged out successfully.
+  - Example response:
+    ```json
+    {
+      "message": "Logged out successfully"
+    }
+    ```
+- **401 Unauthorized**
+  - If the token is missing, invalid, or expired.
+  - Example response:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### Example Request
+
+```
+curl -X GET http://localhost:3000/users/logout \
+  -H "Authorization: Bearer <jwt_token>"
+```
+
+</details>
