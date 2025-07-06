@@ -383,3 +383,180 @@ curl -X POST http://localhost:3000/captains/register \
 ```
 
 </details>
+
+<details>
+<summary><strong>POST /captains/login</strong></summary>
+
+#### Description
+
+Authenticates a captain and returns a JWT token if the credentials are valid.
+
+#### Request Body
+
+Send a JSON object with the following structure:
+
+```
+{
+  "email": "<captain@example.com>",
+  "password": "<password>"
+}
+```
+
+### Field Requirements
+
+- `email` (string, required): Must be a valid email address.
+- `password` (string, required): Minimum 6 characters.
+
+### Responses
+
+#### Success
+
+- **200 OK**
+  - Captain authenticated successfully.
+  - Example response:
+    ```json
+    {
+      "message": "Captain logged in successfully",
+      "token": "<jwt_token>",
+      "captain": {
+        /* captain data */
+      }
+    }
+    ```
+
+#### Error Responses
+
+- **400 Bad Request**
+  - Validation failed (e.g., missing fields, invalid email, short password).
+  - Example response:
+    ```json
+    {
+      "errors": [
+        { "msg": "Please enter a valid email address", "param": "email" },
+        {
+          "msg": "Password must be at least 6 characters long",
+          "param": "password"
+        }
+      ]
+    }
+    ```
+- **401 Unauthorized**
+  - Invalid email or password.
+  - Example response:
+    ```json
+    {
+      "message": "Invalid email or password"
+    }
+    ```
+- **500 Internal Server Error**
+  - Server error during login.
+  - Example response:
+    ```json
+    {
+      "message": "Internal server error"
+    }
+    ```
+
+### Example Request
+
+```
+curl -X POST http://localhost:3000/captains/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "jane.smith@example.com",
+    "password": "secret123"
+  }'
+```
+
+</details>
+
+<details>
+<summary><strong>GET /captains/profile</strong></summary>
+
+#### Description
+
+Returns the authenticated captain's profile information. Requires a valid JWT token in the cookie or Authorization header.
+
+#### Authentication
+
+- Requires authentication via JWT token (sent as a cookie or in the `Authorization: Bearer <token>` header).
+
+#### Request
+
+- No request body required.
+- Must include authentication token.
+
+#### Responses
+
+- **200 OK**
+  - Returns the authenticated captain's profile.
+  - Example response:
+    ```json
+    {
+      "message": "Captain profile retrieved successfully",
+      "captain": {
+        /* captain data */
+      }
+    }
+    ```
+- **401 Unauthorized**
+  - If the token is missing, invalid, or expired.
+  - Example response:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### Example Request
+
+```
+curl -X GET http://localhost:3000/captains/profile \
+  -H "Authorization: Bearer <jwt_token>"
+```
+
+</details>
+
+<details>
+<summary><strong>GET /captains/logout</strong></summary>
+
+#### Description
+
+Logs out the authenticated captain by clearing the authentication token and blacklisting the token to prevent further use.
+
+#### Authentication
+
+- Requires authentication via JWT token (sent as a cookie or in the `Authorization: Bearer <token>` header).
+
+#### Request
+
+- No request body required.
+- Must include authentication token.
+
+#### Responses
+
+- **200 OK**
+  - Captain logged out successfully.
+  - Example response:
+    ```json
+    {
+      "message": "Captain logged out successfully"
+    }
+    ```
+- **401 Unauthorized**
+  - If the token is missing, invalid, or expired.
+  - Example response:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### Example Request
+
+```
+curl -X GET http://localhost:3000/captains/logout \
+  -H "Authorization: Bearer <jwt_token>"
+```
+
+</details>
