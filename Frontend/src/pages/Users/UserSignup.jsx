@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserDataContext } from "../../context/UserContext";
+import { useContext } from "react";
 
 const UserSignup = () => {
   const [email, setEmail] = useState("");
@@ -8,19 +11,38 @@ const UserSignup = () => {
   const [lastName, setLastName] = useState("");
   const [userData, setUserData] = useState({});
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const { user, setUser } = useContext(UserDataContext);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const userData = {
-      fullName: { firstName: firstName, lastName: lastName },
+      fullname: { firstname: firstName, lastname: lastName },
       email: email,
       password: password,
     };
-    setUserData(userData);
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/register`,
+      userData
+    );
+    if (response.status === 201) {
+      const data = response.data;
+      setUser(data.user);
+      localStorage.setItem("token", JSON.stringify(data.token));
+      navigate("/home");
+    } else {
+      console.error("Signup failed", response.data);
+    }
+
     setEmail("");
     setPassword("");
     setFirstName("");
     setLastName("");
   };
+
   return (
     <div className="p-7 h-screen flex flex-col justify-between">
       <div>
@@ -84,8 +106,8 @@ const UserSignup = () => {
       <div>
         <p className="text-xs text-center text-gray-600">
           By clicking "Login", you agree to our{" "}
-          <p className="text-blue-600 inline">Terms of Service</p> and{" "}
-          <p className="text-blue-600 inline">Privacy Policy</p>. You also
+          <span className="text-blue-600">Terms of Service</span> and{" "}
+          <span className="text-blue-600">Privacy Policy</span>. You also
           consent to receiving marketing messages from us and can opt out at any
           time.
         </p>
