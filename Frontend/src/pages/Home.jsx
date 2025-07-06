@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <div>
       <div
-        className="h-screen pt-8 w-full bg-red-400 flex justify-between flex-col"
+        className="h-screen pt-8 w-full flex justify-between flex-col"
         style={{
           backgroundImage: `url('/src/assets/HomeBanner.png')`,
           backgroundSize: "cover",

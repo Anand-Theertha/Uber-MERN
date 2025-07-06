@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -17,7 +16,6 @@ const UserSignup = () => {
       password: password,
     };
     setUserData(userData);
-    console.log(userData);
     setEmail("");
     setPassword("");
     setFirstName("");
@@ -71,7 +69,7 @@ const UserSignup = () => {
           />
 
           <button className="bg-black mb-2 text-white font-semibold w-full py-2 px-4 rounded">
-            Login
+            Sign Up
           </button>
 
           <p className="text-center">
