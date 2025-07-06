@@ -28,7 +28,7 @@ const UserLogin = () => {
         <form onSubmit={(e) => handleSubmit(e)}>
           <h3 className="text-lg font-medium mb-2">What's your email</h3>
           <input
-            className="bg-[#EEEEEE] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base "
+            className="bg-[#EEEEEE] mb-7 rounded px-4 py-2 w-full text-lg placeholder:text-base "
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -38,12 +38,12 @@ const UserLogin = () => {
 
           <h3 className="text-lg font-medium mb-2">Enter Password</h3>
           <input
-            className="bg-[#EEEEEE] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base "
+            className="bg-[#EEEEEE] mb-7 rounded px-4 py-2 w-full text-lg placeholder:text-base "
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            placeholder="password"
+            placeholder="Password"
           />
 
           <button className="bg-black mb-2 text-white font-semibold w-full py-2 px-4 rounded">
