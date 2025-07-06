@@ -1,5 +1,7 @@
 # Backend API Documentation
 
+## Users
+
 <details>
 <summary><strong>POST /users/register</strong></summary>
 
@@ -267,6 +269,117 @@ Logs out the authenticated user by clearing the authentication token and blackli
 ```
 curl -X GET http://localhost:3000/users/logout \
   -H "Authorization: Bearer <jwt_token>"
+```
+
+</details>
+
+## Captains
+
+<details>
+<summary><strong>POST /captains/register</strong></summary>
+
+#### Description
+
+Registers a new captain in the system. This endpoint validates the input, hashes the password, and stores the captain and their vehicle details in the database.
+
+#### Request Body
+
+Send a JSON object with the following structure:
+
+```
+{
+  "fullname": {
+    "firstname": "<First Name>",
+    "lastname": "<Last Name>" // optional
+  },
+  "email": "<captain@example.com>",
+  "password": "<password>",
+  "vehicle": {
+    "color": "<color>",
+    "plate": "<plate>",
+    "capacity": <number>,
+    "vehicleType": "car" // or "motorcycle", "auto"
+  }
+}
+```
+
+### Field Requirements
+
+- `fullname.firstname` (string, required): Minimum 3 characters.
+- `fullname.lastname` (string, optional): Minimum 3 characters if provided.
+- `email` (string, required): Must be a valid email address.
+- `password` (string, required): Minimum 6 characters.
+- `vehicle.color` (string, required): Minimum 3 characters.
+- `vehicle.plate` (string, required): Minimum 3 characters.
+- `vehicle.capacity` (integer, required): Minimum 1.
+- `vehicle.vehicleType` (string, required): Must be one of `car`, `motorcycle`, or `auto`.
+
+### Responses
+
+#### Success
+
+- **201 Created**
+  - Captain registered successfully.
+  - Example response:
+    ```json
+    {
+      "message": "Captain registered successfully",
+      "token": "<jwt_token>",
+      "captain": {
+        /* captain data */
+      }
+    }
+    ```
+
+#### Error Responses
+
+- **400 Bad Request**
+  - Validation failed (e.g., missing fields, invalid email, short password, invalid vehicle data).
+  - Example response:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "First name must be at least 3 characters long",
+          "param": "fullname.firstname"
+        },
+        { "msg": "Please enter a valid email address", "param": "email" }
+      ]
+    }
+    ```
+- **400 Bad Request**
+  - Captain already exists.
+  - Example response:
+    ```json
+    {
+      "message": "Captain already exists"
+    }
+    ```
+- **500 Internal Server Error**
+  - Server error during registration.
+  - Example response:
+    ```json
+    {
+      "message": "Internal server error"
+    }
+    ```
+
+### Example Request
+
+```
+curl -X POST http://localhost:3000/captains/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fullname": { "firstname": "Jane", "lastname": "Smith" },
+    "email": "jane.smith@example.com",
+    "password": "secret123",
+    "vehicle": {
+      "color": "Red",
+      "plate": "XYZ123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }'
 ```
 
 </details>
