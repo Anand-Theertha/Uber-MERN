@@ -1,16 +1,16 @@
 import React from "react";
 import "./index.css";
 import { Route, Routes } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
+import LandingPage from "./pages/Main/LandingPage";
 import UserLogin from "./pages/Users/UserLogin";
 import UserSignup from "./pages/Users/UserSignup";
 import CaptainLogin from "./pages/Captains/CaptainLogin";
 import CaptainSignup from "./pages/Captains/CaptainSignup";
-import Home from "./pages/Home";
-import UserProtectWrapper from "./pages/UserProtectWrapper";
+import Home from "./pages/Main/Home";
+import UserProtectWrapper from "./pages/ProtectWrappers/UserProtectWrapper";
 import UserLogout from "./pages/Users/UserLogout";
 import CaptainHome from "./pages/Captains/CaptainHome";
-import CaptainProtectWrapper from "./pages/CaptainProtectWrapper";
+import CaptainProtectWrapper from "./pages/ProtectWrappers/CaptainProtectWrapper";
 
 const App = () => {
   return (
