@@ -1,15 +1,12 @@
 import CarImage from "../assets/Uber-Car.png";
 
-const ConfirmRide = ({ setConfirmRidePanelOpen, setVehicleFound }) => {
+const LookingForDriver = ({ setVehicleFound }) => {
   return (
     <div>
-      <h5
-        onClick={() => setConfirmRidePanelOpen(false)}
-        className="px-2 text-center"
-      >
+      <h5 onClick={() => setVehicleFound(false)} className="px-2 text-center">
         <i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i>
       </h5>
-      <h3 className="text-2xl font-semibold">Confirm your Ride</h3>
+      <h3 className="text-2xl font-semibold">Looking for a Driver</h3>
       <div className="flex items-center flex-col justify-between gap-2">
         <img className="h-30" src={CarImage} />
         <div className="w-full mt-5">
@@ -35,18 +32,9 @@ const ConfirmRide = ({ setConfirmRidePanelOpen, setVehicleFound }) => {
             </div>
           </div>
         </div>
-        <button
-          onClick={() => {
-            setVehicleFound(true);
-            setConfirmRidePanelOpen(false);
-          }}
-          className="w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-xl"
-        >
-          Confirm
-        </button>
       </div>
     </div>
   );
 };
 
-export default ConfirmRide;
+export default LookingForDriver;
