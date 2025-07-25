@@ -1,12 +1,25 @@
-const WaitingForDriver = () => {
+import CarImage from "../assets/Uber-Car.png";
+
+const WaitingForDriver = ({ waitingForDriverPanelOpen }) => {
   return (
     <div>
-      <h5 onClick={() => setVehicleFound(false)} className="px-2 text-center">
+      <h5
+        onClick={() => waitingForDriverPanelOpen(false)}
+        className="px-2 text-center"
+      >
         <i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i>
       </h5>
-      <h3 className="text-2xl font-semibold">Looking for a Driver</h3>
+
+      <div className="flex items-center justify-between">
+        <img className="h-15" src={CarImage} />
+        <div className="text-right">
+          <h2 className="text-lg font-medium ">Sarthak</h2>
+          <h4 className="text-lg font-semibold -mt-1 -mb-1">KA 01 JP 1999</h4>
+          <p className="text-sm text-gray-600">Swift DZire</p>
+        </div>
+      </div>
+
       <div className="flex items-center flex-col justify-between gap-2">
-        <img className="h-30" src={CarImage} />
         <div className="w-full mt-5">
           <div className="flex items-center gap-5 p-3 border-b-2 border-gray-200">
             <i className="ri-map-pin-user-fill "></i>

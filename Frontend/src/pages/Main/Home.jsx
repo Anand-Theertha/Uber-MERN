@@ -6,6 +6,7 @@ import LocationSearchPanel from "../../components/LocationSearchPanel";
 import VehiclePanel from "../../components/VehiclePanel";
 import ConfirmRide from "../../components/ConfirmRide";
 import LookingForDriver from "../../components/LookingForDriver";
+import WaitingForDriver from "../../components/WaitingForDriver";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -13,12 +14,15 @@ const Home = () => {
   const [panelOpen, setPanelOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [confirmRidePanelOpen, setConfirmRidePanelOpen] = useState(false);
+  const [waitingForDriverPanelOpen, setWaitingForDriverPanelOpen] =
+    useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
   const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false);
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
   const vehiclePanelRef = useRef(null);
   const confirmRidePanelRef = useRef(null);
+  const waitingForDriverRef = useRef(null);
   const vehicleFoundRef = useRef(null);
 
   const handleSubmit = (e) => {
@@ -99,6 +103,21 @@ const Home = () => {
     [vehicleFound]
   );
 
+  useGSAP(
+    function () {
+      if (waitingForDriverPanelOpen == true) {
+        gsap.to(waitingForDriverRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(waitingForDriverRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [waitingForDriverPanelOpen]
+  );
+
   return (
     <div className="h-screen w-screen relative overflow-hidden">
       <img
@@ -174,6 +193,15 @@ const Home = () => {
         className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 pt-2 pb-6 rounded-t-lg"
       >
         <LookingForDriver setVehicleFound={setVehicleFound} />
+      </div>
+
+      <div
+        ref={waitingForDriverRef}
+        className="fixed w-full z-10 bottom-0 bg-white px-3 pt-2 pb-6 rounded-t-lg"
+      >
+        <WaitingForDriver
+          waitingForDriverPanelOpen={waitingForDriverPanelOpen}
+        />
       </div>
     </div>
   );
